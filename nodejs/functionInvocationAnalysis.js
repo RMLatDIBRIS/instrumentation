@@ -436,8 +436,9 @@
          * replaced with the value stored in the <tt>result</tt> property of the object.
          */
         this.getField = function (iid, base, offset, val, isComputed, isOpAssign, isMethodCall) {
-	    if (isMethodCall && (supportedNames === null || supportedNames.includes(offset))){ 
-		if(!methodNames.has(base))
+	    // DA: 2021-11-23: fix, base can also contain strings, weak map keys must be objects
+	    if (base instanceof Object && isMethodCall && (supportedNames === null || supportedNames.includes(offset))){ 
+		if(!methodNames.has(base)) 
 		    methodNames.set(base,new WeakMap());
 		methodNames.get(base).set(val,offset);
 	    }
