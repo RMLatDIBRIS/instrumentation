@@ -9,6 +9,6 @@
   "license": "ISC",
   "private": true,
   "dependencies": {
-    "jalangi2": "^0.2.5"
+    "jalangi2": "^0.2.6"
   }
 }
