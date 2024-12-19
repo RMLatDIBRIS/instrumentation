@@ -247,6 +247,7 @@
             };
             
             metadata = beforeFunction(metadata);
+
             lastInvoked = f;
             
             return {f: metadata.functionObject,
@@ -440,7 +441,9 @@
 	    if (base instanceof Object && isMethodCall && (supportedNames === null || supportedNames.includes(offset))){ 
 		if(!methodNames.has(base)) 
 		    methodNames.set(base,new WeakMap());
-		methodNames.get(base).set(val,offset);
+        // DA fix 2024-12-18, keys in weak maps must be objects or non-registered symbols
+		if(offset!==null && offset!==undefined && val instanceof Object || typeof val==='symbol' && Symbol.keyFor(val)===undefined) 
+            methodNames.get(base).set(val,offset);
 	    }
             return {result: val};
         };
